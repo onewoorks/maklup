@@ -44,6 +44,20 @@ class Register_Controller extends Common_Controller {
         return array('register_id'=> $register_id, 'temporary_id'=> $temporary_id);
     }
     
+    protected function OptionsNew() {
+        $data = file_get_contents('php://input');
+        $raw = json_decode($data);
+        $register = new Pemohon_Model();
+        $register_id = $this->RandomNo();
+        $temporary_id = $this->RandomNo();
+        $input['data_pemohon'] = json_encode($raw->body);
+        $input['register_id'] = $register_id;
+        $input['temporary_id'] = $temporary_id;
+        $register->CreateNewPemohon($input);
+        
+        return array('register_id'=> $register_id, 'temporary_id'=> $temporary_id);
+    }
+    
     protected function GetBillPlzInfo(){
         $blpz = new Billplz_Model();
         $result = $blpz->GetBillPlzInfo($this->url_query['billplzId']);
