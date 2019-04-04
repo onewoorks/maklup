@@ -1,1 +1,1 @@
-# Sistem Pengurusan Emas API
+# Lazy API
