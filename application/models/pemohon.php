@@ -37,5 +37,47 @@ class Pemohon_Model extends Common_Model {
                 . "AND p.temporary_id='" . $this->db->escape($temporary_id) . "'";
         return $this->db->executeQuery($query,'single');
     }
+    
+    public function GetInfoById($pemohon_id) {
+        $query = "SELECT p.* "
+                . "FROM pemohon p "
+                . "WHERE "
+                . "p.id= '" . (int) $pemohon_id . "' ";
+        return $this->db->executeQuery($query,'single');
+    }
+    
+    public function GetUserTemp($email, $temporary_id){
+        $query = "SELECT * FROM pemohon "
+                . "WHERE data_pemohon->>'$.email' = '".$this->db->escape($email)."' "
+                . "AND temporary_id='$temporary_id'";
+        return $this->db->executeQuery($query, 'single');
+    }
+    
+    public function UpdatePemohonPayment($data){
+        $query = "UPDATE $this->pemohon SET "
+                . "payment_status='".$this->db->escape($data['payment_status'])."', "
+                . "payment_option='".$this->db->escape($data['payment_option'])."',"
+                . "appointment_slot='".$this->db->escape($data['appointment_slot'])."', "
+                . "appointment_session='".$this->db->escape($data['appointment_session'])."' "
+                . "WHERE id = '".(int) $data['pemohon_id']."'";
+        $this->db->executeQuery($query);
+    }
+    
+    public function UpdatePemohon($data){
+        $data_pemohon = json_encode($data->body->input);
+        $register_id = $data->body->ref->register_id;
+        $temporary_id = $data->body->ref->temporary_id;
+        $query = "UPDATE pemohon SET "
+                . "data_pemohon = '".$this->db->escape($data_pemohon)."' "
+                . "WHERE register_id = '". $register_id ."' "
+                . "AND temporary_id='".$temporary_id."'";
+        return $this->db->executeQuery($query);
+    }
+    
+    public function ReadAllPemohon(){
+        $query = "SELECT p.* "
+                . "FROM pemohon p";
+        return $this->db->executeQuery($query);
+    }
 
 }

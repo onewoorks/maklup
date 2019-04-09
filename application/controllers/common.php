@@ -1,8 +1,8 @@
 <?php
 
 class Common_Controller {
-    
-    protected function JWT_verify(){
+
+    protected function JWT_verify() {
         print_r(getallheaders()['token']);
     }
 
@@ -134,31 +134,38 @@ class Common_Controller {
         $result = self::ParamSplitter($params);
         return $result;
     }
-    
-    protected function NumberFormat($number){
-        return number_format($number,2,'.',',');
+
+    protected function NumberFormat($number) {
+        return number_format($number, 2, '.', ',');
     }
-    
-    protected function NumberPadding($number, $padding = 7 ){
+
+    protected function NumberPadding($number, $padding = 7) {
         $len = strlen($number);
         $pad = '';
-        for($i=$len; $i<= $padding; $i++):
-            $pad = $pad . '0'; 
+        for ($i = $len; $i <= $padding; $i++):
+            $pad = $pad . '0';
         endfor;
         return $pad . $number;
     }
-    
-    protected function DateFormat($date){
+
+    protected function DateFormat($date) {
         $d = explode('-', $date);
         return $d[2] . '/' . $d[1] . '/' . $d[0];
     }
-    
-    protected function RandomNo( $len = 9 ) {
-    $rand   = '';
-    while( !( isset( $rand[$len-1] ) ) ) {
-        $rand   .= mt_rand( );
+
+    protected function RandomNo($len = 9) {
+        $rand = '';
+        while (!( isset($rand[$len - 1]) )) {
+            $rand .= mt_rand();
+        }
+        return substr($rand, 0, $len);
     }
-    return substr( $rand , 0 , $len );
-}
+    
+    protected function AddReserveSlot($days){
+        $today = date('Y-m-d');
+        $appointment_date = date('Y-m-d', strtotime($today. " + $days days"));
+        return array('slot' => $appointment_date, 'session' => rand(1, 2));
+    }
+    
 
 }
