@@ -199,6 +199,8 @@ class Register_Controller extends Common_Controller {
         $input['seq_no'] = $raw->no_seq;
         $input['payment_date'] = date('Y-m-d', strtotime($raw->tarikh_bayaran));
         $input['payment_time'] = date('H:i:s', strtotime($raw->tarikh_bayaran));
+        $input['paid_amount'] = 800.00;
+        $input['status'] = 'jelas';
         $cdm->CreateNewData($input);
         $this->UpdatePaymentStatus($input['pemohon_id'], 'paid', 'cdm');
     }
