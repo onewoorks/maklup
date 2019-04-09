@@ -56,7 +56,7 @@ class Register_Controller extends Common_Controller {
         $input['register_id'] = $register_id;
         $input['temporary_id'] = $temporary_id;
         $register->CreateNewPemohon($input);
-//        $sms = Onewaysms::SendSMS('60196693481', sprintf($this->sms_message_register, $temporary_id));
+        $sms = Onewaysms::SendSMS('60196693481', sprintf($this->sms_message_register, $temporary_id));
         return array('register_id' => $register_id, 'temporary_id' => $temporary_id, 'sms_info' => '');
     }
 
