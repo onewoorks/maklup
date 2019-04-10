@@ -5,7 +5,7 @@ require_once './application/libraries/addon/onewaysms.php';
 class Register_Controller extends Common_Controller {
 
     private $pemohon;
-    private $sms_message_register = "Maklumat akaun anda telah didaftarkan, sila gunakan id %s ini sekiranya ingin kemaskini akaun semula.";
+    private $sms_message_register = "Maklumat akaun anda telah didaftarkan, sila gunakan  email: %s dan id %s ini sekiranya ingin kemaskini akaun semula.";
 
     public function __construct() {
         $this->pemohon = new Pemohon_Model();
@@ -52,12 +52,13 @@ class Register_Controller extends Common_Controller {
         $register = new Pemohon_Model();
         $register_id = $this->RandomNo();
         $temporary_id = $this->RandomNo();
+        $pemohon = $raw->body;
         $input['data_pemohon'] = json_encode($raw->body);
         $input['register_id'] = $register_id;
         $input['temporary_id'] = $temporary_id;
         $register->CreateNewPemohon($input);
-        $sms = Onewaysms::SendSMS('60196693481', sprintf($this->sms_message_register, $temporary_id));
-        return array('register_id' => $register_id, 'temporary_id' => $temporary_id, 'sms_info' => '');
+        Onewaysms::SendSMS($pemohon->no_telefon, sprintf($this->sms_message_register, $pemohon->email, $temporary_id));
+        return array('register_id' => $register_id, 'temporary_id' => $temporary_id, 'sms_info' => '', 'data_pemohon' => $pemohon);
     }
 
     protected function PostUpdateInfo() {
@@ -113,7 +114,7 @@ class Register_Controller extends Common_Controller {
             'name' => $raw->body->nama,
             'email' => $raw->body->email,
             'amount' => (800 * 100) + 150,
-            'redirect_url' => 'http://localhost:8080/callback/',
+            'redirect_url' => 'http://54.255.179.237:8080/callback/',
             'callback_url' => 'http://localhost/pulkam-api/register/webhook-cb/'
         );
         $result = $pay->setBill($billplz_data);
