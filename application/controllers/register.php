@@ -99,7 +99,7 @@ class Register_Controller extends Common_Controller {
             'data_pemohon' => json_decode($result['data_pemohon']),
             'register_id' => $result['register_id'],
             'temporary_id' => $result['temporary_id'],
-            'timestamp' => $result['timestamp']
+            'timestamp' => date('j F Y', strtotime($result['timestamp']))
         );
         return $data;
     }
