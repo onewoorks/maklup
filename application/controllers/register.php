@@ -29,7 +29,7 @@ class Register_Controller extends Common_Controller {
         $result = $pemohon->GetInfo($param['regid'], $param['tempid']);
         $data = array(
             'id' => $result['id_pemohon'],
-            'timestamp' => $result['daftar'],
+            'timestamp' => date('j F Y', strtotime($result['daftar'])),
             'data_pemohon' => json_decode($result['data_pemohon']),
             'register_id' => $result['register_id'],
             'temporary_id' => $result['temporary_id'],
