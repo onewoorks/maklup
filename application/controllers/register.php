@@ -41,7 +41,7 @@ class Register_Controller extends Common_Controller {
             ),
             'appointment' => array(
                 'slot' => date('d F Y', strtotime($result['appointment_slot'])),
-                'session' => $result['appointment_session'])
+                'session' => ($result['appointment_session']=='pagi') ? '8.00 am - 1.00 pm' : '2.00 - 5.00 pm' )
         );
         return $data;
     }
