@@ -115,8 +115,8 @@ class Register_Controller extends Common_Controller {
             'name' => $raw->body->nama,
             'email' => $raw->body->email,
             'amount' => (800 * 100) + 150,
-            'redirect_url' => 'http://54.255.179.237:8080/callback/',
-            'callback_url' => 'http://localhost/pulkam-api/register/webhook-cb/'
+            'redirect_url' => 'https://daftar.pulkam.com.my/callback/',
+            'callback_url' => 'https://daftar.pulkam.com.my/register/webhook-cb/'
         );
         $result = $pay->setBill($billplz_data);
         $bplz = new Billplz_Model();
