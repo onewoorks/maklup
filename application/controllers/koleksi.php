@@ -40,7 +40,7 @@ class Koleksi_Controller extends Common_Controller {
         endif;
         $pemohon = $this->pemohon->GetInfoById($bl['pemohon_id']);
         $pemohon['data_pemohon'] = json_decode($pemohon['data_pemohon']);
-        $pemohon['appointment_slot'] = date('d F Y', strtotime($pemohon['appointment_slot']));
+        $pemohon['appointment_slot'] = ($pemohon['appointment_session']=='pagi') ? '8.00 am - 1.00 pm' : '2.00 - 5.00 pm';
         return $pemohon;
     }
 
