@@ -190,7 +190,7 @@ class Register_Controller extends Common_Controller {
         return $filter;
     }
 
-    protected function PostUpdateCdm() {
+    protected function PostUpdateCdm($status = 'semakan') {
         $data = file_get_contents('php://input');
         $raw = json_decode($data)->body;
         $pemohon = new Pemohon_Model();
@@ -203,7 +203,7 @@ class Register_Controller extends Common_Controller {
         $input['payment_time'] = date('H:i:s', strtotime($raw->masa_bayaran));
         $input['cdm_data'] = JSON_encode($raw);
         $input['paid_amount'] = 800.00;
-        $input['status'] = 'jelas';
+        $input['status'] = $status;
         $cdm->CreateNewData($input);
         $this->UpdatePaymentStatus($input['pemohon_id'], 'paid', 'cdm');
     }
