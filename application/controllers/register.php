@@ -200,7 +200,8 @@ class Register_Controller extends Common_Controller {
         $input['cdm_id'] = $raw->cdm_id;
         $input['seq_no'] = $raw->no_seq;
         $input['payment_date'] = date('Y-m-d', strtotime($raw->tarikh_bayaran));
-        $input['payment_time'] = date('H:i:s', strtotime($raw->tarikh_bayaran));
+        $input['payment_time'] = date('H:i:s', strtotime($raw->masa_bayaran));
+        $input['cdm_data'] = JSON_encode($raw);
         $input['paid_amount'] = 800.00;
         $input['status'] = 'jelas';
         $cdm->CreateNewData($input);

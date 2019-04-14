@@ -19,7 +19,7 @@ class Cdm_Model extends Common_Model {
     }
     
     public function CreateNewData($data){
-        $query = "INSERT INTO $this->cdm (cdm_id, seq_id, payment_date, payment_time, paid_amount, status, pemohon_id) "
+        $query = "INSERT INTO $this->cdm (cdm_id, seq_id, payment_date, payment_time, paid_amount, status, pemohon_id, cdm_data) "
                 . "VALUE ("
                 . "'".(int) $data['cdm_id']."', "
                 . "'".(int) $data['seq_no']."', "
@@ -27,7 +27,8 @@ class Cdm_Model extends Common_Model {
                 . "'".$this->db->escape($data['payment_time'])."', "
                 . "'".$this->db->escape($data['paid_amount'])."', "
                 . "'".$this->db->escape($data['status'])."', "
-                . "'".(int) $data['pemohon_id']."'"
+                . "'".(int) $data['pemohon_id']."', "
+                . "'". $this->db->escape($data['cdm_data'])."'"
                 . ")";
         $this->db->executeQuery($query);
     }
