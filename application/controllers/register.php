@@ -99,6 +99,9 @@ class Register_Controller extends Common_Controller {
             'data_pemohon' => json_decode($result['data_pemohon']),
             'register_id' => $result['register_id'],
             'temporary_id' => $result['temporary_id'],
+            'appointment' => array(
+                'slot' => date('d F Y', strtotime($result['appointment_slot'])),
+                'session' => ($result['appointment_session']=='pagi') ? '8.00 am - 1.00 pm' : '2.00 - 5.00 pm' )
             'timestamp' => date('j F Y', strtotime($result['timestamp']))
         );
         return $data;
