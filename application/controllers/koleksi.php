@@ -1,10 +1,14 @@
 <?php
 
+require_once './application/libraries/addon/onewaysms.php';
+
 class Koleksi_Controller extends Common_Controller {
 
     protected $cdm;
     protected $billplz;
     protected $pemohon;
+    private $sms_message_register = "Maklumat pembayaran telah disahkan, sila gunakan  email: %s dan id %s ini untuk melihat tiket anda.";
+    
 
     public function __construct() {
         $this->cdm = new Cdm_Model();
@@ -59,6 +63,8 @@ class Koleksi_Controller extends Common_Controller {
     protected function PostUpdateSemakan(){
         $data = file_get_contents('php://input');
         $raw = json_decode($data)->body;
+        $no_telefon = $raw->kod_negara + $raw->no_telefon;
+        Onewaysms::SendSMS($no_telefon, sprintf($this->sms_message_register, $raw->email, $raw->temporary_id));
         $this->pemohon->UpdatePaymentStatus($raw->id_pemohon,'jelas','cdm');
     }
 
