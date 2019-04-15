@@ -63,10 +63,9 @@ class Koleksi_Controller extends Common_Controller {
     protected function PostUpdateSemakan(){
         $data = file_get_contents('php://input');
         $raw = json_decode($data)->body;
-        return $raw;
-        // $no_telefon = $raw->kod_negara + $raw->no_telefon;
-        // Onewaysms::SendSMS($no_telefon, sprintf($this->sms_message_register, $raw->email, $raw->temporary_id));
-        // $this->pemohon->UpdatePaymentStatus($raw->id_pemohon,'jelas','cdm');
+        $no_telefon = $raw->kod_negara + $raw->no_telefon;
+        Onewaysms::SendSMS($no_telefon, sprintf($this->sms_message_register, $raw->email, $raw->temporary_id));
+        $this->UpdatePaymentStatus($raw->id_pemohon,'jelas','cdm');
     }
 
     private function UpdatePaymentStatus($pemohon_id, $payment_status, $payment_option) {
