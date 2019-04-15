@@ -56,6 +56,12 @@ class Koleksi_Controller extends Common_Controller {
         return $result;
     }
 
+    protected function PostUpdateSemakan(){
+        $data = file_get_contents('php://input');
+        $raw = json_decode($data)->body;
+        $this->pemohon->UpdatePaymentStatus($raw->id_pemohon,'jelas','cdm');
+    }
+
     private function UpdatePaymentStatus($pemohon_id, $payment_status, $payment_option) {
         $pay['pemohon_id'] = $pemohon_id;
         $pay['payment_status'] = $payment_status;
