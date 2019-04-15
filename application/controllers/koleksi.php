@@ -65,7 +65,7 @@ class Koleksi_Controller extends Common_Controller {
         $raw = json_decode($data)->body;
         $no_telefon = $raw->kod_negara . $raw->no_telefon;
         Onewaysms::SendSMS($no_telefon, sprintf($this->sms_message_register, $raw->email, $raw->temporary_id));
-        $this->UpdatePaymentStatus($raw->id_pemohon,'jelas','cdm');
+        $this->UpdatePaymentStatus($raw->id_pemohon,'paid','cdm');
     }
 
     private function UpdatePaymentStatus($pemohon_id, $payment_status, $payment_option) {
