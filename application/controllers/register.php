@@ -45,6 +45,29 @@ class Register_Controller extends Common_Controller {
         );
         return $data;
     }
+    
+    protected function GetInfoTempId() {
+        $pemohon = new Pemohon_Model();
+        $param = $this->url_query;
+        $result = $pemohon->GetInfoTempId($param['tempid']);
+        $data = array(
+            'id' => $result['id_pemohon'],
+            'timestamp' => date('j F Y', strtotime($result['daftar'])),
+            'data_pemohon' => json_decode($result['data_pemohon']),
+            'register_id' => $result['register_id'],
+            'temporary_id' => $result['temporary_id'],
+            'billplz_id' => $result['billplz_id'],
+            'billplz_data' => json_decode($result['billplz_data']),
+            'payment' => array(
+                'status' => $result['payment_status'],
+                'option' => $result['payment_option']
+            ),
+            'appointment' => array(
+                'slot' => date('d F Y', strtotime($result['appointment_slot'])),
+                'session' => ($result['appointment_session']=='pagi') ? '8.00 am - 1.00 pm' : '2.00 - 5.00 pm' )
+        );
+        return $data;
+    }
 
     protected function PostNew() {
         $data = file_get_contents('php://input');

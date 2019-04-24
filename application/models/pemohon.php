@@ -38,6 +38,16 @@ class Pemohon_Model extends Common_Model {
         return $this->db->executeQuery($query,'single');
     }
     
+    public function GetInfoTempId($temporary_id) {
+        $query = "SELECT p.*, b.*, p.timestamp AS daftar,"
+                . "p.id as id_pemohon "
+                . "FROM pemohon p "
+                . "LEFT JOIN billplz b ON p.id = b.pemohon_id "
+                . "WHERE "
+                . "p.temporary_id='" . $this->db->escape($temporary_id) . "'";
+        return $this->db->executeQuery($query,'single');
+    }
+    
     public function GetInfoById($pemohon_id) {
         $query = "SELECT p.* "
                 . "FROM pemohon p "
