@@ -23,11 +23,33 @@ class Common_Model {
         endforeach;
     }
     
+    protected function GenerateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+    
     protected function PagingRange($pageNo){
         $list = 50;
         $start = ($pageNo == 1 ) ? 0 : ($pageNo - 1) * 50;
         $end  = $list;
         return "LIMIT $start, $end";
+    }
+    
+    protected function UploadFile($fileData, $transactionCode) {
+        $extension = FALSE;
+        $filename = FALSE;
+
+        if ($extension):
+//            $filename = $transactionCode . '_' . $this->GenerateRandomString() . $extension;
+            $filename = $transactionCode . '_' . $this->GenerateRandomString() . '_' . $fileData['name'];
+            move_uploaded_file($fileData['tmp_name'], UPLOAD_DIR . $filename);
+        endif;
+        return $filename;
     }
 
 }

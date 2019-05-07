@@ -57,5 +57,16 @@ class Preflight_Controller extends Common_Controller {
         endforeach;
         return $result;
     }
+    
+    protected function GetCurrentBlock(){
+        $block_no = $this->url_query['no'];
+        $crews = $this->preflight->ReadCurrentBlock($block_no);
+        $result = array();
+        foreach($crews as $crew):
+            $crew['crew'] = json_decode($crew['crew']);
+            $result[] = $crew['crew'];
+        endforeach;
+        return $result;
+    }
 
 }

@@ -3,7 +3,13 @@
 class Preflight_Model extends Common_Model {
 
     private $preflight = 'preflight';
-    private $columns = array();
+    private $columns = array(
+        array(
+            'column' => 'pemohon_id',
+            'type' => 'int',
+            'length' => '11'
+        )
+    );
 
     public function __construct() {
 
@@ -48,6 +54,12 @@ class Preflight_Model extends Common_Model {
         
         $query = "SELECT *, count(id) as total FROM $this->preflight "
                 . "WHERE $where ";
+        return $this->db->executeQuery($query);
+    }
+    
+    public function ReadCurrentBlock($block_no){
+        $query = "SELECT * FROM $this->preflight "
+                . "WHERE block_no = '" . $this->db->escape($block_no)."'";
         return $this->db->executeQuery($query);
     }
 

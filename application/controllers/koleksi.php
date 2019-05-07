@@ -77,5 +77,19 @@ class Koleksi_Controller extends Common_Controller {
         $pay['appointment_session'] = ($appt_time['session'] == 1) ? 'pagi' : 'petang';
         $this->pemohon->UpdatePemohonPayment($pay);
     }
-
+    
+    protected function PostCdmTransaction(){
+        $data = file_get_contents('php://input');
+        $raw = json_decode($data)->body;
+        $transaction_list = $raw->transaction_ref;
+        $result = $this->cdm->ReadCdmTransaction($transaction_list);
+        $results = array();
+        foreach($result as $r):
+            $r['cdm_data'] = json_decode($r['cdm_data']);
+            $r['data_pemohon'] = json_decode($r['data_pemohon']);
+            $results[] = $r;
+        endforeach;
+        return $results;
+    }
+   
 }

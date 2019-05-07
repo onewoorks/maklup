@@ -24,6 +24,7 @@ define('SCRIPTS', 'application/views/scripts/');
 define('SITE_ROOT', 'http://localhost/pulkam-api/');
 define('URL_ARRAY', '2');
 define('TOKEN_SIGNATURE','pulkam2019byonewoorkssolutions');
+//define('')
 
 require_once(SERVER_ROOT . '/application/engine/router.php');
 // ob_end_flush();
