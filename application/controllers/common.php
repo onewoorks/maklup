@@ -160,12 +160,21 @@ class Common_Controller {
         }
         return substr($rand, 0, $len);
     }
-    
-    protected function AddReserveSlot($days){
+
+    protected function AddReserveSlot($days) {
         $today = date('Y-m-d');
-        $appointment_date = date('Y-m-d', strtotime($today. " + $days days"));
+        $appointment_date = date('Y-m-d', strtotime($today . " + $days days"));
         return array('slot' => $appointment_date, 'session' => rand(1, 2));
     }
-    
+
+    protected function ValidUser($data) {
+        $valid = array(
+            "username" => $data['username'],
+            "password" => $data['password'],
+            "access_level" => $data['access_level']
+        );
+        $token = JWT::encode($valid, TOKEN_SIGNATURE);
+        return $token;
+    }
 
 }
