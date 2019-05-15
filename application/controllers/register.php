@@ -236,9 +236,9 @@ class Register_Controller extends Common_Controller {
     
     protected function GetCheckCdmCode() {
         $cdm = new Cdm_Model();
-        $cdminfo = array();
-        $cdminfo['cdm_id'] = $this->url_query['cdmid'];
-        $cdminfo['seq_id'] = $this->url_query['seqid'];
+	$cdminfo = array();
+        $cdminfo['cdm_id'] = urldecode($this->url_query['cdmid']);
+	$cdminfo['seq_id'] = $this->url_query['seqid'];
         $check = $cdm->ReadCdmNumber($cdminfo);
         if(count($check)==0){
             $result['data'] = $check;

@@ -66,7 +66,6 @@ class Cdm_Model extends Common_Model {
         $query = "SELECT * FROM $this->cdm "
                 . "WHERE cdm_id = '" . $this->db->escape($cdminfo['cdm_id']) . "' "
                 . "AND seq_id = '" . $this->db->escape($cdminfo['seq_id']) . "'";
-        echo $query;
         return $this->db->executeQuery($query);
     }
 
