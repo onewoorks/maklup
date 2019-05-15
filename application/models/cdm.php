@@ -68,5 +68,14 @@ class Cdm_Model extends Common_Model {
                 . "AND seq_id = '" . $this->db->escape($cdminfo['seq_id']) . "'";
         return $this->db->executeQuery($query);
     }
+    
+    public function ReadAllCdm($status = false){
+        $where = (!$status) ? '1' : "status = '$status' ";
+        $query = "SELECT c.*, p.* "
+                . "FROM cdm c "
+                . "LEFT JOIN pemohon p ON p.id = c.pemohon_id "
+                . "WHERE $where ";
+        return $this->db->executeQuery($query);
+    }
 
 }
