@@ -35,6 +35,9 @@ class Cdm_Controller extends Common_Controller {
     protected function PostApproveList(){
         $data = file_get_contents('php://input');
         $raw = json_decode($data);
+        foreach($raw as $r):
+            
+        endforeach;
         return $raw;
     }
 
