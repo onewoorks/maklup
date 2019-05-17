@@ -31,5 +31,11 @@ class Cdm_Controller extends Common_Controller {
         endforeach;
         return $result;
     }
+    
+    protected function PostApproveList(){
+        $data = file_get_contents('php://input');
+        $raw = json_decode($data);
+        return $raw;
+    }
 
 }
