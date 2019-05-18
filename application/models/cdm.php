@@ -71,11 +71,35 @@ class Cdm_Model extends Common_Model {
     
     public function ReadAllCdm($status = false){
         $where = (!$status) ? '1' : "status = '$status' ";
-        $query = "SELECT c.*, p.* "
+        $query = "SELECT c.*, p.*, c.id AS cdmid "
                 . "FROM cdm c "
                 . "LEFT JOIN pemohon p ON p.id = c.pemohon_id "
                 . "WHERE $where ";
         return $this->db->executeQuery($query);
+    }
+
+    public function UpdateCdmStatus($input,$status){
+	    $in_predicate = array();
+	    foreach($input as $i):
+			$in_predicate[] = "( id ='".(int) $i['cdm_id']."' AND pemohon_id='". (int) $i['pemohon_id']."')";
+		endforeach;    
+	$in_query = implode(' OR ', $in_predicate);
+    	$query = "UPDATE $this->cdm SET "
+		. "status = '". $this->db->escape($status) ."' "
+		. "WHERE ($in_query) ";
+	    return $this->db->executeQuery($query);
+    }
+
+    public function UpdatePemohonPayment($input,$status){
+	$in_predicate = array();
+	foreach($input as $i):
+		$in_predicate[] = "(id='".(int) $i['pemohon_id']."' AND register_id='".$i['register_id']."' AND temporary_id = '".$i['temporary_id']."')";
+	endforeach;
+	$in_query = implode(' OR ', $in_predicate);
+    	$query = "UPDATE pemohon SET "
+		. "payment_status = '".$this->db->escape($status)."' "
+		. "WHERE ($in_query) ";
+	return $this->db->executeQuery($query);
     }
 
 }
